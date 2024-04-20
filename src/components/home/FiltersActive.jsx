@@ -54,7 +54,7 @@ const FiltersActive = () => {
         )}
 
         {idCategoriesChecked.length > 0 && (
-          <li className="relative flex-shrink-0 items-center z-40 gap-2 bg-slate-700/10 rounded-2xl px-3">
+          <li className="relative flex-shrink-0 items-center gap-2 min-[930px]:z-10 bg-slate-700/10 rounded-2xl px-3">
             <button onClick={handleShowCategories} className="flex">
               category ({idCategoriesChecked.length})
               <i
@@ -70,7 +70,7 @@ const FiltersActive = () => {
                   : "min-[930px]:grid-rows-[0fr] max-[929px]:-bottom-[100%]"
               } bg-slate-100 rounded-sm shadow-[0_4px_4px_0_rgba(0,0,0,.25)] max-[929px]:z-30 px-3 min-[930px]:w-[280px] mt-2`}
             >
-              <div className="overflow-hidden relative grid max-[929px]:py-2">
+              <div className="overflow-hidden relative  grid max-[929px]:py-2">
                 <button
                   onClick={handleShowCategories}
                   className="min-[930px]:hidden absolute right-0 top-0"
@@ -97,7 +97,7 @@ const FiltersActive = () => {
           onClick={handleShowCategories}
           className={`fixed ${
             isShowCategories ? "visible" : "hidden"
-          } top-0 left-0 bottom-0 right-0 min-[930px]:hidden bg-black/40 z-30`}
+          } top-0 left-0 bottom-0 right-0 min-[930px]:hidden bg-black/40 z-20`}
         ></div>
         {priceFilter.activeFilter && (
           <li className="relative flex justify-center items-center flex-shrink-0 z-10 bg-slate-700/10 rounded-2xl gap-1 px-3">
