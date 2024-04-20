@@ -69,7 +69,7 @@ const Home = () => {
       <aside
         className={`min-[871px]:min-w-[280px] max-[929px]:py-5 max-[929px]:relative min-w-[300px] max-[870px]:border-none max-[870px]:rounded-none max-[870px]:shadow-black/30 transition-all duration-200 ${
           isShowFilters ? "max-[870px]:right-0" : "max-[870px]:-right-[100%]"
-        } max-[870px]:fixed max-[870px]:top-0 max-[870px]:z-50 bg-white h-full px-4 border rounded-md pb-4 pt-2`}
+        } max-[870px]:fixed max-[870px]:top-0 max-[870px]:z-40 bg-white h-full px-4 border rounded-md pb-4 pt-2`}
       >
         <button
           onClick={handleShowFilters}
