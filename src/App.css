@@ -1,0 +1,55 @@
+@media (max-width: 1200px) {
+  .search:focus-within + a {
+    @apply -ml-[calc(165px+20px)];
+  }
+}
+
+@media (max-width: 930px) {
+  .search:focus-within + a + div + nav {
+    @apply ml-[calc(88px)];
+  }
+}
+
+@media (max-width: 340px) {
+  .search:focus-within + a {
+    @apply -ml-[calc(140px+20px)];
+  }
+}
+.btn-loading,
+.img-loading {
+  animation-delay: 0.2s;
+}
+
+.description-loading {
+  animation-delay: 0.8s;
+}
+
+
+.description-loading,
+.btn-loading,
+.img-loading,
+.title-loading::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(
+    to right,
+    #d9d9d9 0%,
+    rgba(0, 0, 0, 0.05) 20%,
+    #d9d9d9 40%,
+    #d9d9d9 100%
+  );
+  background-size: 450px 400px;
+  background-repeat: no-repeat;
+  animation: shimmer 1s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -450px 0;
+  }
+  100% {
+    background-position: 450px 0;
+  }
+}
