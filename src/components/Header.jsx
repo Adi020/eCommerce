@@ -51,7 +51,7 @@ const Header = ({ ref1 }) => {
   };
 
   return (
-    <header className="place-content-center fixed top-0 left-0 right-0 z-30 bg-white h-[50px] min-[930px]:h-[70px] flex items-center border-b">
+    <header className="place-content-center fixed top-0 left-0 right-0 z-20 bg-white h-[50px] min-[930px]:h-[70px] flex items-center border-b">
       <div className="flex h-[32px] min-[930px]:h-[49px] overflow-hidden items-center justify-between w-full px-5 max-w-[1280px]">
         <form
           className="search order-3 min-[930px]:order-2 group transition-all min-w-[24px] duration-400 min-[930px]:w-[100%] min-[930px]:min-w-[30%] max-w-[600px] min-[930px]:mr-[15%] max-[1200px]:focus:mr-0 h-full  max-[1200px]:focus-within:min-w-[100%]"
@@ -100,7 +100,7 @@ const Header = ({ ref1 }) => {
         <nav
           className={`flex transition-all duration-200 justify-end max-[929px]:ml-1 max-[929px]:gap-2 ${
             token ? "gap-6" : "gap-2"
-          } order-4 min-[930px]:order-3 min-[930px]:order-2 min-[930px]:min-w-[241px]`}
+          } order-4 min-[930px]:order-3  min-[930px]:min-w-[241px]`}
         >
           <button
             className="hover:text-red-400 relative text-gray-600 flex items-center transition-colors duration-200"
