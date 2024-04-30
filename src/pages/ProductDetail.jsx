@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { axiosEcommerce } from "../utils/configAxios";
 import ProductsList from "../components/home/ProductsList";
 import { addProductCart } from "../store/slices/cart.slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoadingProductDetail from "../components/animation/LoadingProductDetail";
 import LoadingProducts from "../components/animation/LoadingProducts";
 
@@ -13,9 +13,12 @@ const ProductDetail = () => {
   const [similarProducts, setSimilarProducts] = useState([]);
   const [productImages, setProductImages] = useState([]);
   const [indexImageToShow, setIndexImageToShow] = useState(1);
+  const { token } = useSelector((store) => store.userInfo);
 
   const { id } = useParams();
   const dispatch = useDispatch();
+  let Navigate = useNavigate();
+
 
   const handleClickPlus = () => setQuantity(quantity + 1);
   const handleClickLess = () => {
@@ -36,11 +39,13 @@ const ProductDetail = () => {
   };
 
   const handleClickAddToProduct = () => {
-    const productToAdd = {
-      quantity,
-      productId: product.id,
-    };
-    dispatch(addProductCart(productToAdd));
+    if (token) {
+      const productToAdd = {
+        quantity,
+        productId: product.id,
+      };
+      dispatch(addProductCart(productToAdd));
+    } else Navigate("/login");
   };
 
   useEffect(() => {
