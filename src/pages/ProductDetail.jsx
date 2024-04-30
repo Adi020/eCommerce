@@ -72,7 +72,7 @@ const ProductDetail = () => {
           console.log(err.response);
         });
     } else {
-      toast.error("verify your requests product not found"),
+      toast.error("verify your requests"),
         {
           toastId: "getProductIdErr",
           autoClose: 5000,
