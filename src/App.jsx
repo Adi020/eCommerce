@@ -10,12 +10,14 @@ import Cart from "./cart/Cart";
 import Signup from "./pages/Signup";
 import ErrorMesage from "./components/error/ErrorMesage";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <>
       <main className="min-h-screen overflow-hidden">
         <Header />
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products/:id" element={<ProductDetail />} />
