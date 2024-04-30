@@ -6,6 +6,7 @@ import { addProductCart } from "../store/slices/cart.slice";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingProductDetail from "../components/animation/LoadingProductDetail";
 import LoadingProducts from "../components/animation/LoadingProducts";
+import { toast } from "react-toastify";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState();
@@ -18,7 +19,6 @@ const ProductDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   let Navigate = useNavigate();
-
 
   const handleClickPlus = () => setQuantity(quantity + 1);
   const handleClickLess = () => {
@@ -49,13 +49,40 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    axiosEcommerce
-      .get(`/products/${id}`)
-      .then(({ data }) => {
-        setProduct(data);
-        setProductImages(data.images);
-      })
-      .catch((err) => console.log(err));
+    if (+id) {
+      axiosEcommerce
+        .get(`/products/${id}`)
+        .then(({ data }) => {
+          setProduct(data);
+          setProductImages(data.images);
+        })
+        .catch((err) => {
+          toast.error(
+            `verify your request or try again later: ${err.response.data}`,
+            {
+              toastId: "getProductId",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
+          console.log(err.response);
+        });
+    } else {
+      toast.error("verify your requests product not found"),
+        {
+          toastId: "getProductIdErr",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        };
+    }
   }, [id]);
 
   useEffect(() => {
