@@ -7,15 +7,16 @@ import { Zoom, toast } from "react-toastify";
 
 const Purchases = () => {
   const [purchasesHistory, setPurchasesHistory] = useState([]);
+  const [isLoadingPurchases, setIsLoadingPurchases] = useState(true)
   useEffect(() => {
     const promise = axiosEcommerce.get("/purchases", getConfig());
 
     toast.promise(
       promise,
       {
-        pending: "Trayendo compras...",
-        success: "Compras traidas con éxito",
-        error: "Hubo un error al traer tus compras intenta más tarde",
+        pending: "Bringing purchases...",
+        success: "Purchases brought successfully",
+        error: "There was an error bringing your purchases, try again later",
       },
       {
         toastId: "getCategoriesToast",
@@ -38,6 +39,7 @@ const Purchases = () => {
           );
         });
         setPurchasesHistory(orderPurchases);
+        setIsLoadingPurchases(false)
       })
       .catch((data) => console.log(data));
   }, []);
@@ -52,14 +54,14 @@ const Purchases = () => {
         <span className="font-bold truncate w-[200px]">Purchases</span>
       </section>
       <h3 className="font-bold text-xl">My purchases</h3>
-      {purchasesHistory.length ? (
+      {isLoadingPurchases ? (
+        <LoadingPurchases />
+      ) : (
         <section className="grid gap-14 pl- px-4">
           {purchasesHistory.map((purchase) => (
             <Purchase key={purchase.id} purchase={purchase} />
           ))}
         </section>
-      ) : (
-        <LoadingPurchases />
       )}
     </section>
   );
