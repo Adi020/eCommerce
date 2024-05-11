@@ -81,7 +81,7 @@ const Login = () => {
               required
             />
           </div>
-          <button className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors">
+          <button type="submit" className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors">
             login
           </button>
           <span className="text-sm">
