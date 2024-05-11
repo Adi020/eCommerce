@@ -12,6 +12,7 @@ const Login = () => {
   let Navigate = useNavigate();
 
   const submit = (dataForm) => {
+        console.log("se hizo un submit")
     dispatch(loginUser(dataForm));
   };
 
@@ -81,7 +82,7 @@ const Login = () => {
               required
             />
           </div>
-          <button onClick={() => console.log("se hizo submit")} className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors">
+          <button className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors">
             login
           </button>
           <span className="text-sm">
