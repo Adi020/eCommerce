@@ -32,6 +32,7 @@ const Login = () => {
             {user.firstName} {user.className}
           </span>
           <button
+            title="Logout"
             onClick={handleClickLogout}
             className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors rounded-md"
           >
@@ -81,12 +82,13 @@ const Login = () => {
               required
             />
           </div>
-          <button title="submit form" className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors">
+          <button title="Login" className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors">
             login
           </button>
           <span className="text-sm">
             Don´t have an account?{" "}
             <button
+              title="Sign up"
               onClick={handleNavigateSignup}
               type="button"
               className="text-blue-400"
