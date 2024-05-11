@@ -33,7 +33,6 @@ export const loginUser = (dataForm) => (dispatch) => {
     .post("/users/login", dataForm)
     .then(({ data }) => {
       dispatch(setUserInfo(data))
-      console.log(data)
     })
     .catch((err) => {
       toast.error(err.response.data.error, {
