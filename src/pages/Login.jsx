@@ -51,7 +51,7 @@ const Login = () => {
             <h5 className="text-center mb-4 font-bold">Test data</h5>
             <div className="flex items-center gap-2">
               <i className="bx bx-envelope"></i>
-              <span>john@gmail.com</span>
+              <span>2john@gmail.com</span>
             </div>
             <div className="flex items-center gap-2">
               <i className="bx bx-lock-alt"></i>
