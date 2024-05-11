@@ -12,7 +12,6 @@ const Login = () => {
   let Navigate = useNavigate();
 
   const submit = (dataForm) => {
-        console.log("se hizo un submit")
     dispatch(loginUser(dataForm));
   };
 
