@@ -20,7 +20,7 @@ const Header = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const currentProductName = e.target.productName.value;
-    dispatch(setProductName(currentProductName.trim().toLowerCase()));
+    dispatch(setProductName(currentProductName));
     dispatch(removeCheckedCategories());
     dispatch(setPriceFilter({ minPrice: "", maxPrice: "" }));
     Navigate("/");
@@ -28,9 +28,9 @@ const Header = () => {
   };
 
   const handleInputChange = (e) => {
-    dispatch(setProductName(e.target.value.trim().toLowerCase()));
+    const inputValue = e.target.value
+    dispatch(setProductName(inputValue));
   };
-
   const handleBlur = () => {
     if (document.activeElement) {
       document.activeElement.blur();
