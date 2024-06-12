@@ -5,6 +5,7 @@ import { Zoom, toast } from "react-toastify";
 const initialState = {
   products: [],
   productName: "",
+  productNameFilter: "",
   categories: [],
   idCategoriesChecked: [],
   productsByCategory: {},
@@ -27,6 +28,7 @@ const productsInfoSlice = createSlice({
     setProductName: (state, actions) => {
       const productName = actions.payload;
       state.productName = productName;
+      state.productNameFilter = productName.trim().toLowerCase()
     },
     setCategories: (state, action) => {
       state.categories = action.payload;
@@ -50,12 +52,12 @@ const productsInfoSlice = createSlice({
       });
     },
     setProductsByCategory: (state) => {
-      const { productName, products, categories, priceFilter } = state;
+      const { productNameFilter, products, categories, priceFilter } = state;
       for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
         const productsFiltered = products.filter(
           (product) =>
-            product.title.toLowerCase().includes(productName.toLowerCase().trim()) &&
+            product.title.toLowerCase().includes(productNameFilter) &&
             product.categoryId === category.id &&
             +product.price >= priceFilter.minPrice &&
             +product.price <= priceFilter.maxPrice
@@ -76,10 +78,11 @@ const productsInfoSlice = createSlice({
         { length: 0 }
       );
       state.idCategoriesChecked = idCheckedCategories;
+      state.idCategoriesChecked.activeFilter = idCheckedCategories.length > 0
     },
     setProductsFilter: (state) => {
-      const { productName, idCategoriesChecked, products, priceFilter } = state;
-      const lowerCaseProductName = productName.toLowerCase().trim();
+      const { productNameFilter, idCategoriesChecked, products, priceFilter } = state;
+      const lowerCaseProductName = productNameFilter;
       state.filteredProducts = products.filter(
         (product) =>
           product.title.toLowerCase().includes(lowerCaseProductName) &&
@@ -91,16 +94,16 @@ const productsInfoSlice = createSlice({
       );
     },
     setFiltersActive: (state) => {
-      let { productName, idCategoriesChecked, filtersActive, priceFilter } =
+      let { productNameFilter, idCategoriesChecked, filtersActive, priceFilter } =
         state;
       const filters = ["productName", "categories", "price"];
 
       filters.forEach((filter) => {
         const filterIsActive = filtersActive.includes(filter);
         const shouldFilterBeActive =
-          (filter === "productName" && productName.trim()) ||
-          (filter === "categories" && idCategoriesChecked.length) ||
-          (filter === "price" && (priceFilter.minPrice !== 0 || priceFilter.maxPrice !== Infinity));
+          (filter === "productName" && productNameFilter) ||
+          (filter === "categories" && idCategoriesChecked.activeFilter) ||
+          (filter === "price" && priceFilter.activeFilter);
 
         if (filterIsActive && !shouldFilterBeActive) {
           filtersActive.splice(filtersActive.indexOf(filter), 1);
@@ -114,6 +117,7 @@ const productsInfoSlice = createSlice({
       const { minPrice, maxPrice } = action.payload;
       state.priceFilter.minPrice = minPrice !== "" ? minPrice : 0;
       state.priceFilter.maxPrice = maxPrice !== "" ? maxPrice : Infinity;
+      state.priceFilter.activeFilter = maxPrice !== "" || minPrice !== ""
     },
   },
 });
