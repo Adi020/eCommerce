@@ -8,7 +8,7 @@ import {
 import { changeIsShowCart } from "../store/slices/cart.slice";
 import React, { useRef } from "react";
 
-const Header = ({ ref1 }) => {
+const Header = () => {
   const { isShowCart, cartProducts } = useSelector((store) => store.cart);
   const { token } = useSelector((store) => store.userInfo);
   const { productName } = useSelector((store) => store.productsInfo);
@@ -104,7 +104,6 @@ const Header = ({ ref1 }) => {
         >
           <button
             className="hover:text-red-400 relative text-gray-600 flex items-center transition-colors duration-200"
-            ref={ref1}
             onClick={handleClickShowCart}
           >
             <i className="bx bx-cart text-2xl "></i>
