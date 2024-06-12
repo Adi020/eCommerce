@@ -34,7 +34,6 @@ const Header = () => {
   const handleBlur = () => {
     if (document.activeElement) {
       document.activeElement.blur();
-      dispatch(setProductName(productName.trim());
     }
   };
 
