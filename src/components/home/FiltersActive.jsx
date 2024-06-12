@@ -6,7 +6,6 @@ import {
 } from "../../store/slices/productsInfo.slice";
 import { useSelector, useDispatch } from "react-redux";
 import CategoriesList from "./CategoriesList";
-import { space } from "postcss/lib/list";
 
 const FiltersActive = () => {
   const { idCategoriesChecked, productName, filtersActive, priceFilter } =
@@ -40,7 +39,7 @@ const FiltersActive = () => {
       )}
 
       <ul className="flex flex-nowrap min-[871px]:flex-wrap items-center gap-2 text-gray-700">
-        {productName && (
+        {filtersActive.includes("productName") && (
           <li>
             <article className=" bg-slate-700/10 rounded-2xl flex gap-1 px-3 justify-center items-center">
               <span>Text:</span>
@@ -53,7 +52,7 @@ const FiltersActive = () => {
           </li>
         )}
 
-        {idCategoriesChecked.length > 0 && (
+        {filtersActive.includes("categories") && (
           <li className="relative flex-shrink-0 items-center gap-2 min-[930px]:z-10 bg-slate-700/10 rounded-2xl px-3">
             <button onClick={handleShowCategories} className="flex">
               category ({idCategoriesChecked.length})
@@ -99,7 +98,7 @@ const FiltersActive = () => {
             isShowCategories ? "visible" : "hidden"
           } top-0 left-0 bottom-0 right-0 min-[930px]:hidden bg-black/40 z-20`}
         ></div>
-        {priceFilter.activeFilter && (
+        {filtersActive.includes("price") && (
           <li className="relative flex justify-center items-center flex-shrink-0 z-10 bg-slate-700/10 rounded-2xl gap-1 px-3">
             {priceFilter.minPrice > 0 ? (
               <span className="order-2">${priceFilter.minPrice}</span>
