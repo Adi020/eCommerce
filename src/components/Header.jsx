@@ -28,7 +28,7 @@ const Header = ({ ref1 }) => {
   };
 
   const handleInputChange = (e) => {
-    dispatch(setProductName(e.target.value.toLowerCase().trim());
+    dispatch(setProductName(e.target.value.trim().toLowerCase());
   };
 
   const handleBlur = () => {
