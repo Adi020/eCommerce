@@ -55,7 +55,7 @@ const productsInfoSlice = createSlice({
         const category = categories[i];
         const productsFiltered = products.filter(
           (product) =>
-            product.title.toLowerCase().includes(productName.toLowerCase()) &&
+            product.title.toLowerCase().includes(productName.toLowerCase().trim()) &&
             product.categoryId === category.id &&
             +product.price >= priceFilter.minPrice &&
             +product.price <= priceFilter.maxPrice
@@ -79,7 +79,7 @@ const productsInfoSlice = createSlice({
     },
     setProductsFilter: (state) => {
       const { productName, idCategoriesChecked, products, priceFilter } = state;
-      const lowerCaseProductName = productName.toLowerCase();
+      const lowerCaseProductName = productName.toLowerCase().trim();
       state.filteredProducts = products.filter(
         (product) =>
           product.title.toLowerCase().includes(lowerCaseProductName) &&
@@ -98,9 +98,9 @@ const productsInfoSlice = createSlice({
       filters.forEach((filter) => {
         const filterIsActive = filtersActive.includes(filter);
         const shouldFilterBeActive =
-          (filter === "productName" && productName) ||
+          (filter === "productName" && productName.trim()) ||
           (filter === "categories" && idCategoriesChecked.length) ||
-          (filter === "price" && priceFilter.activeFilter);
+          (filter === "price" && (priceFilter.minPrice !== 0 || priceFilter.maxPrice !== Infinity));
 
         if (filterIsActive && !shouldFilterBeActive) {
           filtersActive.splice(filtersActive.indexOf(filter), 1);
@@ -112,11 +112,8 @@ const productsInfoSlice = createSlice({
     },
     setPriceFilter: (state, action) => {
       const { minPrice, maxPrice } = action.payload;
-
       state.priceFilter.minPrice = minPrice !== "" ? minPrice : 0;
       state.priceFilter.maxPrice = maxPrice !== "" ? maxPrice : Infinity;
-
-      state.priceFilter.activeFilter = minPrice !== "" || maxPrice !== "";
     },
   },
 });
