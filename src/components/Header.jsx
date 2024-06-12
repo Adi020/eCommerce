@@ -35,6 +35,7 @@ const Header = () => {
     if (document.activeElement) {
       document.activeElement.blur();
     }
+    dispatch(setProductName(productName.trim())
   };
 
   const handleClickBlur = () => {
