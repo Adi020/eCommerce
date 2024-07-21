@@ -28,7 +28,7 @@ const Header = () => {
   };
 
   const handleInputChange = (e) => {
-    const inputValue = e.target.value
+    const inputValue = e.target.value;
     dispatch(setProductName(inputValue));
   };
   const handleBlur = () => {
@@ -73,6 +73,7 @@ const Header = () => {
               />
             </div>
             <button
+              title="delete search"
               type="button"
               onClick={handleClickBlur}
               className="absolute right-0 min-[930px]:hidden invisible group-focus-within:visible group-focus-within:z-20"
@@ -80,6 +81,7 @@ const Header = () => {
               <i className="bx bx-x text-3xl font-sm min-[930px]:pr-1 text-gray-600"></i>
             </button>
             <button
+              title="reset input"
               type="button"
               onClick={handleClickResetInput}
               className="absolute right-0 max-[929px]:hidden invisible group-focus-within:visible group-focus-within:z-20"
@@ -103,6 +105,7 @@ const Header = () => {
           } order-4 min-[930px]:order-3  min-[930px]:min-w-[241px]`}
         >
           <button
+            title="show cart"
             className="hover:text-red-400 relative text-gray-600 flex items-center transition-colors duration-200"
             onClick={handleClickShowCart}
           >
