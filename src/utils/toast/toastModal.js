@@ -13,11 +13,11 @@ export const toastsuccess = (message, toastId, autoClose) => {
   });
 };
 
-export const toastError = (message, toastId) => {
+export const toastError = (message, toastId, autoClose) => {
   toast.error(message, {
     toastId,
     position: "top-center",
-    autoClose: 1000,
+    autoClose: autoClose | 1000,
     hideProgressBar: true,
     closeOnClick: true,
     pauseOnHover: true,
@@ -43,7 +43,7 @@ export const toastPromise = (promise, pending, toastId, delay) => {
       draggable: true,
       progress: undefined,
       transition: Zoom,
-      delay: delay || 0
+      delay: delay || 0,
     }
   );
 };
