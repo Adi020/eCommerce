@@ -1,88 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { axiosEcommerce, getConfig } from "../../utils/configAxios";
+import { axiosEcommerce } from "../../utils/configAxios";
 import { toastError } from "../../utils/toast/toastModal";
 
 const initialState = {
-  cartProducts: [],
-  isShowCart: false,
+  token: "",
+  user: null,
+  err: null,
 };
-const cartSlice = createSlice({
-  initialState,
-  name: "cart",
+
+const userInfoSlice = createSlice({
+  initialState: JSON.parse(localStorage.getItem("userInfo")) ?? initialState,
+  name: "userInfo",
   reducers: {
-    changeIsShowCart: (state) => {
-      state.isShowCart = !state.isShowCart;
+    setUserInfo: (state, actions) => {
+      const response = actions.payload;
+      const newState = { ...state, ...response };
+      localStorage.setItem("userInfo", JSON.stringify(newState));
+      return newState;
     },
-    setCartProducts: (state, action) => {
-      const newCartProducts = action.payload;
-      state.cartProducts = newCartProducts;
-    },
-    removeCartProducts: () => {
+    logout: (state) => {
+      const newState = { ...state, ...initialState };
+      localStorage.setItem("userInfo", JSON.stringify(newState));
       return initialState;
     },
   },
 });
 
-export const { changeIsShowCart, setCartProducts, removeCartProducts } =
-  cartSlice.actions;
+export const { setUserInfo, logout, setErr } = userInfoSlice.actions;
 
-export const getCartProducts = () => (dispatch) => {
+export const loginUser = (dataForm) => (dispatch) => {
   axiosEcommerce
-    .get("/cart", getConfig())
-    .then(({ data }) => dispatch(setCartProducts(data)))
-    .catch((err) => {
-      toastError(err.response.data.error, "cartProductsErrorToast");
-      console.log(err);
-    });
+    .post("/users/login", dataForm)
+    .then(({ data }) => {
+      dispatch(setUserInfo(data));
+    })
+    .catch((err) => toastError(err.response.data.error, "loginError", 4000));
 };
 
-export const addProductCart = (data) => (dispatch) => {
-  axiosEcommerce
-    .post("/cart", data, getConfig())
-    .then(() => dispatch(getCartProducts()))
-    .catch((err) => {
-      toastError(
-        err.response.data.error,
-        `addProductErrorToast-${data.productId}`
-      );
-      console.log(err);
-    });
-};
-
-export const deleteProductCart = (productId) => (dispatch) => {
-  axiosEcommerce
-    .delete(`/cart/${productId}`, getConfig())
-    .then(() => dispatch(getCartProducts()))
-    .catch((err) => {
-      toastError(
-        err.response.data.error,
-        `deleteProductToastError-${productId}`
-      );
-      console.log(err);
-    });
-};
-
-export const updateProductCart = (productId, quantity) => (dispatch) => {
-  axiosEcommerce
-    .put(`/cart/${productId}`, quantity, getConfig())
-    .then(({ data }) => dispatch(getCartProducts()))
-    .catch((err) => {
-      toastError(
-        err.response.data.error,
-        `updateProductToastError-${productId}`
-      );
-      console.log(err);
-    });
-};
-
-export const checkoutCart = () => (dispatch) => {
-  axiosEcommerce
-    .post("/purchases", {}, getConfig())
-    .then(() => dispatch(getCartProducts()))
-    .catch((err) => {
-      toastError(err.response.data.err, "purchaseProductsToastError");
-      console.log(err);
-    });
-};
-
-export default cartSlice.reducer;
+export default userInfoSlice.reducer;
