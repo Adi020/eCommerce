@@ -6,7 +6,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Purchases from "./pages/Purchases";
 import Header from "./components/Header";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import Cart from "./cart/Cart";
+import Cart from "./components/cart/Cart";
 import Signup from "./pages/Signup";
 import ErrorMesage from "./components/error/ErrorMesage";
 import Footer from "./components/Footer";
