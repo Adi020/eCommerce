@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { axiosEcommerce, getConfig } from "../../utils/configAxios";
-import { Slide, Zoom, toast } from "react-toastify";
+import { toastError } from "../../utils/toast/toastModal";
 
 const initialState = {
   cartProducts: [],
@@ -31,15 +31,7 @@ export const getCartProducts = () => (dispatch) => {
     .get("/cart", getConfig())
     .then(({ data }) => dispatch(setCartProducts(data)))
     .catch((err) => {
-      toast.error(err.response.data.error, {
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        transition: Zoom,
-      });
+      toastError(err.response.data.error, "cartProductsErrorToast");
       console.log(err);
     });
 };
@@ -49,15 +41,10 @@ export const addProductCart = (data) => (dispatch) => {
     .post("/cart", data, getConfig())
     .then(() => dispatch(getCartProducts()))
     .catch((err) => {
-      toast.error(err.response.data.error, {
-        toastId: `addProductToast-${data.productId}`,
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toastError(
+        err.response.data.error,
+        `addProductErrorToast-${data.productId}`
+      );
       console.log(err);
     });
 };
@@ -67,15 +54,10 @@ export const deleteProductCart = (productId) => (dispatch) => {
     .delete(`/cart/${productId}`, getConfig())
     .then(() => dispatch(getCartProducts()))
     .catch((err) => {
-      toast.error(err.response.data.error, {
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        transition: Zoom,
-      });
+      toastError(
+        err.response.data.error,
+        `deleteProductToastError-${productId}`
+      );
       console.log(err);
     });
 };
@@ -85,15 +67,10 @@ export const updateProductCart = (productId, quantity) => (dispatch) => {
     .put(`/cart/${productId}`, quantity, getConfig())
     .then(({ data }) => dispatch(getCartProducts()))
     .catch((err) => {
-      toast.error(err.response.data.error, {
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        transition: Zoom,
-      });
+      toastError(
+        err.response.data.error,
+        `updateProductToastError-${productId}`
+      );
       console.log(err);
     });
 };
@@ -103,15 +80,7 @@ export const checkoutCart = () => (dispatch) => {
     .post("/purchases", {}, getConfig())
     .then(() => dispatch(getCartProducts()))
     .catch((err) => {
-      toast.error(err.response.data.error, {
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        transition: Zoom,
-      });
+      toastError(err.response.data.err, "purchaseProductsToastError");
       console.log(err);
     });
 };
