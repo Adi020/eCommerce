@@ -4,33 +4,14 @@ import Purchase from "../components/purchases/Purchase";
 import { Link } from "react-router-dom";
 import LoadingPurchases from "../components/animation/LoadingPurchases";
 import { Zoom, toast } from "react-toastify";
+import { toastPromise } from "../utils/toast/toastModal";
 
 const Purchases = () => {
   const [purchasesHistory, setPurchasesHistory] = useState([]);
-  const [isLoadingPurchases, setIsLoadingPurchases] = useState(true)
+  const [isLoadingPurchases, setIsLoadingPurchases] = useState(true);
   useEffect(() => {
     const promise = axiosEcommerce.get("/purchases", getConfig());
-
-    toast.promise(
-      promise,
-      {
-        pending: "Bringing purchases...",
-        success: "Purchases brought successfully",
-        error: "There was an error bringing your purchases, try again later",
-      },
-      {
-        toastId: "getCategoriesToast",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        transition: Zoom,
-        delay: 100,
-      }
-    );
-
+    toastPromise(promise, "Bringing purchases...", "getPurchasesToast");
     promise
       .then(({ data }) => {
         const orderPurchases = data.sort((a, b) => {
@@ -39,7 +20,7 @@ const Purchases = () => {
           );
         });
         setPurchasesHistory(orderPurchases);
-        setIsLoadingPurchases(false)
+        setIsLoadingPurchases(false);
       })
       .catch((data) => console.log(data));
   }, []);
