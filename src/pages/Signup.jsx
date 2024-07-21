@@ -76,7 +76,7 @@ const Signup = () => {
             Password
           </label>
           <input
-            {...register("password")}
+            {...register("password", {pattern: /^(?=.*[\W|_1|\d])\S{8,}$/ })}
             className="border border-gray-300 outline-none p-2 rounded-md"
             id="password"
             type="password"
