@@ -23,7 +23,6 @@ const Signup = () => {
       .catch((err) => {
         toastError(err.response.data.error, "signupError");
         console.log(err);
-
       });
   };
 
@@ -63,9 +62,7 @@ const Signup = () => {
             Email
           </label>
           <input
-            {...register("email", {
-              pattern: /^[a-z\d][a-z\d\-._]+@[a-z]+\.[a-z]+$/i,
-            })}
+            {...register("email")}
             className="border border-gray-300 outline-none p-2 rounded-md"
             id="email"
             type="email"
@@ -77,12 +74,7 @@ const Signup = () => {
             Password
           </label>
           <input
-            {...register("password", {
-              pattern: {
-                value: /^(?=.*[\W|_1|\d])\S{8,}$/,
-                message: "the password contains at least 8",
-              },
-            })}
+            {...register("password")}
             className="border border-gray-300 outline-none p-2 rounded-md"
             id="password"
             type="password"
@@ -101,7 +93,10 @@ const Signup = () => {
           />
         </div>
 
-        <button title="login" className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors">
+        <button
+          title="login"
+          className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors"
+        >
           login
         </button>
         <span className="text-sm">
