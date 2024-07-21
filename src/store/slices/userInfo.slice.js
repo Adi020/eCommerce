@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { axiosEcommerce } from "../../utils/configAxios";
 import { toast } from "react-toastify";
+import { toastError } from "../../utils/toast/toastModal";
 
 const initialState = {
   token: "",
@@ -32,20 +33,9 @@ export const loginUser = (dataForm) => (dispatch) => {
   axiosEcommerce
     .post("/users/login", dataForm)
     .then(({ data }) => {
-      dispatch(setUserInfo(data))
+      dispatch(setUserInfo(data));
     })
-    .catch((err) => {
-      toast.error(err.response.data.error, {
-        toastId: `loginUserError`,
-        position: "top-center",
-        autoClose: 4000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    });
+    .catch((err) => toastError(err.response.data.error, "loginError", 4000));
 };
 
 export default userInfoSlice.reducer;
