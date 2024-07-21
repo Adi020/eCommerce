@@ -1,31 +1,30 @@
 import { useForm } from "react-hook-form";
 import { axiosEcommerce } from "../utils/configAxios";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { toastError, toastsuccess } from "../utils/toast/toastModal";
 
 const Signup = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  console.log(errors);
   let Navigate = useNavigate();
 
   const submit = (dataForm) => {
     axiosEcommerce
       .post("/users", dataForm)
-      .then(() => Navigate("/login"))
-      .catch((err) =>
-        toast.error(err.response.data.error, {
-          toastId: `loginUserError`,
-          position: "top-center",
-          autoClose: 4000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })
-      );
-  };
+      .then((data) => {
+        Navigate("/login");
+        toastsuccess(data.statusText, "signupSuccess");
+      })
+      .catch((err) => {
+        toastError(err.response.data.error, "signupError");
+        console.log(err);
 
-  const handleNavigateLogin = () => {
-    Navigate("/login");
+      });
   };
 
   return (
@@ -64,7 +63,9 @@ const Signup = () => {
             Email
           </label>
           <input
-            {...register("email", {pattern: /^[a-z\d][a-z\d\-._]+@[a-z]+\.[a-z]+$/i })}
+            {...register("email", {
+              pattern: /^[a-z\d][a-z\d\-._]+@[a-z]+\.[a-z]+$/i,
+            })}
             className="border border-gray-300 outline-none p-2 rounded-md"
             id="email"
             type="email"
@@ -76,11 +77,15 @@ const Signup = () => {
             Password
           </label>
           <input
-            {...register("password", {pattern: /^(?=.*[\W|_1|\d])\S{8,}$/ })}
+            {...register("password", {
+              pattern: {
+                value: /^(?=.*[\W|_1|\d])\S{8,}$/,
+                message: "the password contains at least 8",
+              },
+            })}
             className="border border-gray-300 outline-none p-2 rounded-md"
             id="password"
             type="password"
-            required
           />
         </div>
         <div className="grid gap-2">
@@ -101,11 +106,7 @@ const Signup = () => {
         </button>
         <span className="text-sm">
           Already have an account?
-          <button
-            onClick={handleNavigateLogin}
-            type="button"
-            className="text-blue-400"
-          >
+          <button type="button" className="text-blue-400">
             Log in
           </button>
         </span>
