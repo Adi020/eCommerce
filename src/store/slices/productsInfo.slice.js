@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { axiosEcommerce } from "../../utils/configAxios";
-import { Zoom, toast } from "react-toastify";
+import { toastPromise } from "../../utils/toast/toastModal";
 
 const initialState = {
   products: [],
@@ -28,7 +28,7 @@ const productsInfoSlice = createSlice({
     setProductName: (state, actions) => {
       const productName = actions.payload;
       state.productName = productName;
-      state.productNameFilter = productName.trim().toLowerCase()
+      state.productNameFilter = productName.trim().toLowerCase();
     },
     setCategories: (state, action) => {
       state.categories = action.payload;
@@ -78,10 +78,11 @@ const productsInfoSlice = createSlice({
         { length: 0 }
       );
       state.idCategoriesChecked = idCheckedCategories;
-      state.idCategoriesChecked.activeFilter = idCheckedCategories.length > 0
+      state.idCategoriesChecked.activeFilter = idCheckedCategories.length > 0;
     },
     setProductsFilter: (state) => {
-      const { productNameFilter, idCategoriesChecked, products, priceFilter } = state;
+      const { productNameFilter, idCategoriesChecked, products, priceFilter } =
+        state;
       const lowerCaseProductName = productNameFilter;
       state.filteredProducts = products.filter(
         (product) =>
@@ -94,8 +95,12 @@ const productsInfoSlice = createSlice({
       );
     },
     setFiltersActive: (state) => {
-      let { productNameFilter, idCategoriesChecked, filtersActive, priceFilter } =
-        state;
+      let {
+        productNameFilter,
+        idCategoriesChecked,
+        filtersActive,
+        priceFilter,
+      } = state;
       const filters = ["productName", "categories", "price"];
 
       filters.forEach((filter) => {
@@ -117,7 +122,7 @@ const productsInfoSlice = createSlice({
       const { minPrice, maxPrice } = action.payload;
       state.priceFilter.minPrice = minPrice !== "" ? minPrice : 0;
       state.priceFilter.maxPrice = maxPrice !== "" ? maxPrice : Infinity;
-      state.priceFilter.activeFilter = maxPrice !== "" || minPrice !== ""
+      state.priceFilter.activeFilter = maxPrice !== "" || minPrice !== "";
     },
   },
 });
@@ -137,26 +142,7 @@ export const {
 
 export const getProducts = () => (dispatch) => {
   const promise = axiosEcommerce.get(`/products`);
-
-  toast.promise(
-    promise,
-    {
-      pending: "Bringing products...",
-      success: "Products successfully brought",
-      error: "We couldn't bring the products, try again later.",
-    },
-    {
-      toastId: "getProductsToast",
-      autoClose: 1000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      transition: Zoom,
-    }
-  );
-
+  toastPromise(promise, "Bringing products...", "getProductsToast");
   promise
     .then(({ data }) => {
       dispatch(setProducts(data));
@@ -166,27 +152,7 @@ export const getProducts = () => (dispatch) => {
 
 export const getCategories = () => (dispatch) => {
   const promise = axiosEcommerce.get("/categories");
-
-  toast.promise(
-    promise,
-    {
-      pending: "Bringing categories...",
-      success: "Categories brought successfully.",
-      error: "We couldn't bring the categories, please try again later.",
-    },
-    {
-      toastId: "getCategoriesToast",
-      autoClose: 1000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      transition: Zoom,
-      delay: 100,
-    }
-  );
-
+  toastPromise(promise, "Bringing categories...", "getCategoriesToast", 100);
   promise
     .then(({ data }) => {
       dispatch(setCategories(data));
