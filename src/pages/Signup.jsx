@@ -5,12 +5,7 @@ import { useEffect } from "react";
 import { toastError, toastsuccess } from "../utils/toast/toastModal";
 
 const Signup = () => {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
-  console.log(errors);
+  const { register, handleSubmit } = useForm();
   let Navigate = useNavigate();
 
   const submit = (dataForm) => {
