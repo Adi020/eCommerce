@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingProductDetail from "../components/animation/LoadingProductDetail";
 import LoadingProducts from "../components/animation/LoadingProducts";
 import { toast } from "react-toastify";
+import { toastError } from "../utils/toast/toastModal";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState();
@@ -57,31 +58,15 @@ const ProductDetail = () => {
           setProductImages(data.images);
         })
         .catch((err) => {
-          toast.error(
+          toastError(
             `verify your request or try again later: ${err.response.data}`,
-            {
-              toastId: "getProductId",
-              autoClose: 5000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            }
+            "getProductIdToastError",
+            5000
           );
           console.log(err.response);
         });
     } else {
-      toast.error("verify your requests"),
-        {
-          toastId: "getProductIdErr",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        };
+      toastError("verify your request", "getProductIdToastError", 5000);
     }
   }, [id]);
 
