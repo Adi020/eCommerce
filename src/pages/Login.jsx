@@ -63,7 +63,7 @@ const Login = () => {
               Email
             </label>
             <input
-              {...register("email", {pattern: /^[a-z\d][a-z\d\-._]+@[a-z]+\.[a-z]+$/i})}
+              {...register("email", {pattern: /^[a-z\d][a-z\d\-._]+@[a-z]+\.[a-z]+$/i })}
               className="border border-gray-300 outline-none p-2 rounded-md"
               id="email"
               type="email"
