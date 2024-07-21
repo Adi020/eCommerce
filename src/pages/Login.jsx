@@ -82,13 +82,13 @@ const Login = () => {
               required
             />
           </div>
-          <button title="Login" className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors">
+          <button title="login" className="block w-full py-2 bg-red-500 text-white hover:bg-red-600 transition-colors">
             login
           </button>
           <span className="text-sm">
             Don´t have an account?{" "}
             <button
-              title="Sign up"
+              title="sign up"
               onClick={handleNavigateSignup}
               type="button"
               className="text-blue-400"
