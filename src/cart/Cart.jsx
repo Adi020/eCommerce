@@ -50,7 +50,7 @@ const Cart = () => {
             isShowCart && token ? "-right-0" : "-right-full"
           } transition-all duration-200 p-2 ease-in shadow-2xl shadow-black/30 grid grid-rows-[auto_1fr_auto]`}
         >
-          <button onClick={handleIsShowCart} className="absolute top-0 right-0">
+          <button onClick={handleIsShowCart} title="hidden cart" className="absolute top-0 right-0">
             <i className="bx bx-x text-3xl text-gray-600"></i>
           </button>
           <h3 className="font-bold text-xl">Shopping cart</h3>
